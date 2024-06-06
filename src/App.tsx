@@ -1,7 +1,25 @@
-import { Button, ButtonGroup } from "@chakra-ui/react";
+import React from "react";
+import Calculator from "./"; // Adjust the import path as necessary
+import "./index.css";
 
-function App() {
-  return <Button colorScheme="blue">Button</Button>;
-}
+const App: React.FC = () => {
+  return (
+    <div
+      style={{
+        alignContent: "center",
+        alignItems: "center",
+        padding: "50px",
+        backgroundColor: "#333",
+        color: "#fff",
+        minHeight: "100vh",
+      }}
+    >
+      <h1>Real Estate Calculator</h1>
+      <Calculator />
+      <br></br>
+      <hr></hr>
+    </div>
+  );
+};
 
 export default App;
