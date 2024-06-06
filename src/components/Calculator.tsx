@@ -1,4 +1,12 @@
 import React, { useState, useEffect } from "react";
+import {
+  Heading,
+  Text,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Checkbox,
+} from "@chakra-ui/react";
 
 const Calculator: React.FC = () => {
   const [homeValue, setHomeValue] = useState<number>(0);
@@ -115,37 +123,54 @@ const Calculator: React.FC = () => {
 
   return (
     <div>
-      <span>Value of Property: $ </span>
-      <input
-        type="number"
-        value={homeValue}
-        onChange={(e) => setHomeValue(Number(e.target.value))}
-        placeholder="Home value"
-        step={50000}
-        style={{}}
-      />
+      <hr></hr>
       <p></p>
-      <span>Virtual Staging: </span>
-      <input
-        type="number"
-        value={virtualStaging}
-        onChange={(e) => setVirtualStaging(Number(e.target.value))}
-        placeholder="Virtual staging"
-      />
+      <Heading size="md" color="lightblue">
+        Estimated Listing Price:{" "}
+      </Heading>
+      <InputGroup>
+        <InputLeftAddon pointerEvents="none" color="lightblue" fontSize="1.2em">
+          $
+        </InputLeftAddon>
+        <Input
+          color="lightblue"
+          value={homeValue}
+          onChange={(e) => setHomeValue(Number(e.target.value))}
+          placeholder="300000"
+        />
+      </InputGroup>
+
       <p></p>
-      <input
-        type="checkbox"
+      <Heading size="md" color="lightblue">
+        Virtual Staging:{" "}
+      </Heading>
+      <InputGroup>
+        <InputLeftAddon pointerEvents="none" color="lightblue" fontSize="1.2em">
+          #
+        </InputLeftAddon>
+        <Input
+          color="lightblue"
+          type="number"
+          value={virtualStaging}
+          onChange={(e) => setVirtualStaging(Number(e.target.value))}
+        />
+      </InputGroup>
+
+      <Checkbox
         checked={isMatterport}
         onChange={(e) => setIsMatterport(e.target.checked)}
-      />
-      <span> Matterport + Floor Plan Schematic</span>
+      >
+        {" "}
+        Matterport + Floor Plan Schematic
+      </Checkbox>
       <p></p>
-      <input
+      <Checkbox
         type="checkbox"
         checked={isVideo}
         onChange={(e) => setIsVideo(e.target.checked)}
-      />
-      <span> Video ***</span>
+      >
+        Video
+      </Checkbox>
       <p></p>
       <hr></hr>
       <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
@@ -167,42 +192,46 @@ const Calculator: React.FC = () => {
       </span> */}
       {/* <hr></hr> */}
       <p></p>
-      <h3>Payment Distribution</h3>
+      <Heading>Payment Distribution</Heading>
       <p></p>
-      <input
+      <hr></hr>
+      <Checkbox
         type="checkbox"
         checked={includeAssistant}
         onChange={(e) => setIncludeAssistant(e.target.checked)}
-      />
-      <span> Include Assistant Pay</span>
-      <p></p>
+      >
+        Include Assistant Pay
+      </Checkbox>
+      <hr></hr>
       <p>
-        <input type="hidden" />
-        Photographer Pay: ${photographerPay.toFixed(2)}
+        <Heading size="xs">
+          Photographer Pay: ${photographerPay.toFixed(2)}
+        </Heading>
       </p>
       {includeAssistant && (
         <p>
-          <input type="hidden" />
-          Assistant Pay: ${assistPay.toFixed(2)}
+          <Heading size="xs">Assistant Pay: ${assistPay.toFixed(2)}</Heading>
         </p>
       )}
       <p>
-        <input type="hidden" />
-        Editor Pay: ${editorPay.toFixed(2)}
+        <Heading size="xs">Editor Pay: ${editorPay.toFixed(2)}</Heading>
       </p>
       {isVideo && (
         <p>
-          <input type="hidden" />
-          Videographer Pay: ${videographerPay.toFixed(2)}
+          <Heading size="xs">
+            Videographer Pay: ${videographerPay.toFixed(2)}
+          </Heading>
         </p>
       )}
       {isVideo && (
         <p>
-          <input type="hidden" />
-          Video Editor Pay: ${videoEditorPay.toFixed(2)}
+          <Heading size="xs">
+            Video Editor Pay: ${videoEditorPay.toFixed(2)}
+          </Heading>
         </p>
       )}
-      <p> Company Profit: ${companyProfit.toFixed(2)}</p>
+      <Heading size="md"> Company Profit: ${companyProfit.toFixed(2)}</Heading>
+      <hr></hr>
     </div>
   );
 };

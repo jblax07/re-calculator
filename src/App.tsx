@@ -1,5 +1,6 @@
 import React from "react";
-import Calculator from "./"; // Adjust the import path as necessary
+import Calculator from "./components/Calculator"; // Adjust the import path as necessary
+import { Heading } from "@chakra-ui/react";
 import "./index.css";
 
 const App: React.FC = () => {
@@ -14,10 +15,9 @@ const App: React.FC = () => {
         minHeight: "100vh",
       }}
     >
-      <h1>Real Estate Calculator</h1>
+      <Heading>Real Estate Calculator</Heading>
       <Calculator />
       <br></br>
-      <hr></hr>
     </div>
   );
 };
