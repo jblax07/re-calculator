@@ -1,4 +1,5 @@
-<p></p>
+{
+  /* <p></p>
       <Heading>Payment Distribution</Heading>
       <p></p>
       <hr></hr>
@@ -38,4 +39,5 @@
         </p>
       )}
       <Heading size="md"> Company Profit: ${companyProfit.toFixed(2)}</Heading>
-      <hr></hr>
+      <hr></hr> */
+}
