@@ -8,8 +8,6 @@ const App: React.FC = () => {
   return (
     <div
       style={{
-        alignContent: "center",
-        alignItems: "center",
         padding: "50px",
         minHeight: "100vh",
       }}
@@ -27,10 +25,11 @@ const App: React.FC = () => {
         <Show above="lg">
           <GridItem area="aside">Aside</GridItem>
         </Show>
-        <GridItem area="main">Main</GridItem>
+        <GridItem area="main">
+          <Heading>Real Estate Calculator</Heading>
+          <Calculator />
+        </GridItem>
       </Grid>
-      <Heading>Real Estate Calculator</Heading>
-      <Calculator />
       <br></br>
     </div>
   );

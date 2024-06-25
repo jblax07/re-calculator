@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Heading,
-  Text,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -125,15 +124,12 @@ const Calculator: React.FC = () => {
     <div>
       <hr></hr>
       <p></p>
-      <Heading size="md" color="lightblue">
-        Estimated Listing Price:{" "}
-      </Heading>
+      <Heading size="md">Estimated Listing Price: </Heading>
       <InputGroup>
-        <InputLeftAddon pointerEvents="none" color="lightblue" fontSize="1.2em">
+        <InputLeftAddon pointerEvents="none" fontSize="1.2em">
           $
         </InputLeftAddon>
         <Input
-          color="lightblue"
           value={homeValue}
           onChange={(e) => setHomeValue(Number(e.target.value))}
           placeholder="300000"
@@ -141,15 +137,12 @@ const Calculator: React.FC = () => {
       </InputGroup>
 
       <p></p>
-      <Heading size="md" color="lightblue">
-        Virtual Staging:{" "}
-      </Heading>
+      <Heading size="md">Virtual Staging: </Heading>
       <InputGroup>
-        <InputLeftAddon pointerEvents="none" color="lightblue" fontSize="1.2em">
+        <InputLeftAddon pointerEvents="none" fontSize="1.2em">
           #
         </InputLeftAddon>
         <Input
-          color="lightblue"
           type="number"
           value={virtualStaging}
           onChange={(e) => setVirtualStaging(Number(e.target.value))}
