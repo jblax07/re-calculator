@@ -6,27 +6,18 @@ import NavBar from "./components/NavBar";
 
 const App: React.FC = () => {
   return (
-    <div
-      style={{
-        padding: "50px",
-        minHeight: "100vh",
-      }}
-    >
+    <div>
       <Grid
         templateAreas={{
           base: '"nav" "main"',
-          lg: '"nav nav" "aside main"', //1024px
+          lg: '"nav nav" "main"', //1024px
         }}
       >
-        <GridItem area="nav">
+        <GridItem area="nav" bgColor="#13A5C2">
           <NavBar />
         </GridItem>
 
-        <Show above="lg">
-          <GridItem area="aside">Aside</GridItem>
-        </Show>
-        <GridItem area="main">
-          <Heading>Real Estate Calculator</Heading>
+        <GridItem area="main" padding="20px">
           <Calculator />
         </GridItem>
       </Grid>

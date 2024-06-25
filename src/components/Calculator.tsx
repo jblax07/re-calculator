@@ -5,7 +5,10 @@ import {
   InputGroup,
   InputLeftAddon,
   Checkbox,
+  VStack,
+  HStack,
 } from "@chakra-ui/react";
+import CopyButton from "./CopyButton";
 
 const Calculator: React.FC = () => {
   const [homeValue, setHomeValue] = useState<number>(0);
@@ -84,12 +87,10 @@ const Calculator: React.FC = () => {
     includeAssistant,
   ]);
 
-  // Function to increment the home value
   const incrementHomeValue = () => {
     setHomeValue((prev) => prev + 50000);
   };
 
-  // Function to decrement the home value
   const decrementHomeValue = () => {
     setHomeValue((prev) => Math.max(0, prev - 50000)); // Prevent negative values
   };
@@ -102,7 +103,6 @@ const Calculator: React.FC = () => {
     setVirtualStaging((prev) => Math.max(0, prev - 1)); // Prevent negative values
   };
 
-  // Calculate payments based on the total cost
   const photographerPay = includeAssistant
     ? (photoCost + matterCost) * 0.5
     : (photoCost + matterCost) * 0.7;
@@ -122,54 +122,53 @@ const Calculator: React.FC = () => {
 
   return (
     <div>
-      <hr></hr>
-      <p></p>
-      <Heading size="md">Estimated Listing Price: </Heading>
-      <InputGroup>
-        <InputLeftAddon pointerEvents="none" fontSize="1.2em">
-          $
-        </InputLeftAddon>
-        <Input
-          value={homeValue}
-          onChange={(e) => setHomeValue(Number(e.target.value))}
-          placeholder="300000"
-        />
-      </InputGroup>
+      <VStack padding="25px">
+        <Heading size="md">Estimated Listing Price: </Heading>
+        <InputGroup>
+          <InputLeftAddon pointerEvents="none" fontSize="1.2em">
+            $
+          </InputLeftAddon>
+          <Input
+            value={homeValue}
+            onChange={(e) => setHomeValue(Number(e.target.value))}
+            placeholder="300000"
+          />
+        </InputGroup>
+        <p></p>
+        <Heading size="md">Virtual Staging: </Heading>
+        <InputGroup>
+          <InputLeftAddon pointerEvents="none" fontSize="1.2em">
+            #
+          </InputLeftAddon>
+          <Input
+            type="number"
+            value={virtualStaging}
+            onChange={(e) => setVirtualStaging(Number(e.target.value))}
+          />
+        </InputGroup>
+        <Checkbox
+          checked={isMatterport}
+          onChange={(e) => setIsMatterport(e.target.checked)}
+        >
+          {" "}
+          Matterport + Floor Plan Schematic
+        </Checkbox>
+        <p></p>
+        <Checkbox
+          type="checkbox"
+          checked={isVideo}
+          onChange={(e) => setIsVideo(e.target.checked)}
+        >
+          Video
+        </Checkbox>
+        <p></p>
+        <HStack margin="0px">
+          <Heading size="lg">Total Cost: ${totalCost.toFixed(2)}</Heading>{" "}
+          <p></p>
+          <CopyButton textToCopy={totalCost.toFixed(2)} />
+        </HStack>
 
-      <p></p>
-      <Heading size="md">Virtual Staging: </Heading>
-      <InputGroup>
-        <InputLeftAddon pointerEvents="none" fontSize="1.2em">
-          #
-        </InputLeftAddon>
-        <Input
-          type="number"
-          value={virtualStaging}
-          onChange={(e) => setVirtualStaging(Number(e.target.value))}
-        />
-      </InputGroup>
-
-      <Checkbox
-        checked={isMatterport}
-        onChange={(e) => setIsMatterport(e.target.checked)}
-      >
-        {" "}
-        Matterport + Floor Plan Schematic
-      </Checkbox>
-      <p></p>
-      <Checkbox
-        type="checkbox"
-        checked={isVideo}
-        onChange={(e) => setIsVideo(e.target.checked)}
-      >
-        Video
-      </Checkbox>
-      <p></p>
-      <hr></hr>
-      <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
-      <p></p>
-      <hr></hr>
-      {/* {closingPayment > 0 && (
+        {/* {closingPayment > 0 && (
         <>
           <h4>$650 Deposit</h4>
           <h4>${closingPayment.toFixed(2)} At Closing if Elected</h4>
@@ -177,54 +176,14 @@ const Calculator: React.FC = () => {
         </>
       )}
       {!closingPayment && <h4></h4>} */}
-      {/* <hr></hr> */}
-      {/* <span>
+        {/* <hr></hr> */}
+        {/* <span>
         We offer a delayed payment plan for those bigger shoots: Pay $650
         upfront and defer the remaining balance with a 15% convenience fee on
         the remaining balance at closing.
       </span> */}
-      {/* <hr></hr> */}
-      <p></p>
-      <Heading>Payment Distribution</Heading>
-      <p></p>
-      <hr></hr>
-      <Checkbox
-        type="checkbox"
-        checked={includeAssistant}
-        onChange={(e) => setIncludeAssistant(e.target.checked)}
-      >
-        Include Assistant Pay
-      </Checkbox>
-      <hr></hr>
-      <p>
-        <Heading size="xs">
-          Photographer Pay: ${photographerPay.toFixed(2)}
-        </Heading>
-      </p>
-      {includeAssistant && (
-        <p>
-          <Heading size="xs">Assistant Pay: ${assistPay.toFixed(2)}</Heading>
-        </p>
-      )}
-      <p>
-        <Heading size="xs">Editor Pay: ${editorPay.toFixed(2)}</Heading>
-      </p>
-      {isVideo && (
-        <p>
-          <Heading size="xs">
-            Videographer Pay: ${videographerPay.toFixed(2)}
-          </Heading>
-        </p>
-      )}
-      {isVideo && (
-        <p>
-          <Heading size="xs">
-            Video Editor Pay: ${videoEditorPay.toFixed(2)}
-          </Heading>
-        </p>
-      )}
-      <Heading size="md"> Company Profit: ${companyProfit.toFixed(2)}</Heading>
-      <hr></hr>
+        {/* <hr></hr> */}
+      </VStack>
     </div>
   );
 };
