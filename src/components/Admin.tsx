@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect } from "react";
 import PasteButton from "./PasteButton";
+import DateCopy from "./dateCopy";
 
 const Admin: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -202,6 +203,7 @@ const Admin: React.FC = () => {
               </HStack>
             </VStack>
           </CardBody>
+          <DateCopy />
         </Card>
       )}
     </div>
