@@ -10,7 +10,11 @@ import {
 import { HamburgerIcon } from "@chakra-ui/icons";
 import ColorModeSwitch from "./ColorModeSwitch";
 
-const MenuSelector = () => {
+interface MenuSelectorProps {
+  setCurrentComponent: (component: string) => void;
+}
+
+const MenuSelector: React.FC<MenuSelectorProps> = ({ setCurrentComponent }) => {
   return (
     <Menu>
       <MenuButton
@@ -21,8 +25,12 @@ const MenuSelector = () => {
       />
       <MenuList>
         <MenuGroup title="Pages">
-          <MenuItem>Estimator</MenuItem>
-          <MenuItem>Payout</MenuItem>
+          <MenuItem onClick={() => setCurrentComponent("Calculator")}>
+            Estimator
+          </MenuItem>
+          <MenuItem onClick={() => setCurrentComponent("Admin")}>
+            Admin
+          </MenuItem>
         </MenuGroup>
         <MenuDivider />
 
