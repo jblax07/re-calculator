@@ -114,7 +114,12 @@ const Admin: React.FC = () => {
           </InputGroup>
         </VStack>
       ) : (
-        <Card maxW={{ base: "100%", sm: "1920px" }}>
+        <Card
+          maxW={{ base: "100%", sm: "1920px" }}
+          opacity=".90"
+          height="calc(90vh - 5vh)"
+          marginBottom="20px"
+        >
           <CardHeader>
             <Heading size="md" p="15px">
               Total Job Price:{" "}

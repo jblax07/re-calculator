@@ -24,19 +24,20 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ setCurrentComponent }) => {
         variant="outline"
       />
       <MenuList>
-        <MenuGroup title="Pages">
-          <MenuItem onClick={() => setCurrentComponent("Calculator")}>
-            Estimator
-          </MenuItem>
+        <MenuGroup>
           <MenuItem onClick={() => setCurrentComponent("Admin")}>
             Admin
           </MenuItem>
+          <MenuItem onClick={() => setCurrentComponent("Calculator")}>
+            Estimator
+          </MenuItem>
         </MenuGroup>
         <MenuDivider />
-
-        <MenuItem>
-          <ColorModeSwitch />
-        </MenuItem>
+        <MenuGroup title="Theme Mode">
+          <MenuItem>
+            <ColorModeSwitch />
+          </MenuItem>
+        </MenuGroup>
       </MenuList>
     </Menu>
   );
