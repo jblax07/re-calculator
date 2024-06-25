@@ -4,9 +4,10 @@ import { CopyIcon } from "@chakra-ui/icons";
 
 interface PasteButtonProps {
   inputRef: React.RefObject<HTMLInputElement>;
+  onPaste: (pastedText: string) => void;
 }
 
-const PasteButton: React.FC<PasteButtonProps> = ({ inputRef }) => {
+const PasteButton: React.FC<PasteButtonProps> = ({ inputRef, onPaste }) => {
   const toast = useToast();
 
   const handlePasteClick = async () => {
@@ -14,6 +15,7 @@ const PasteButton: React.FC<PasteButtonProps> = ({ inputRef }) => {
       const text = await navigator.clipboard.readText();
       if (inputRef.current) {
         inputRef.current.value = text;
+        onPaste(text); // Trigger the state update in the parent component
       }
       toast({
         title: "Pasted",

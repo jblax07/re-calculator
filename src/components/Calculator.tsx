@@ -113,23 +113,6 @@ const Calculator: React.FC = () => {
     setVirtualStaging((prev) => Math.max(0, prev - 1)); // Prevent negative values
   };
 
-  const photographerPay = includeAssistant
-    ? (photoCost + matterCost) * 0.5
-    : (photoCost + matterCost) * 0.7;
-  const assistPay = includeAssistant ? (photoCost + matterCost) * 0.2 : 0;
-  const editorPay = photoCost * 0.06;
-
-  const videographerPay = isVideo ? photoCost * 0.7 : 0;
-  const videoEditorPay = isVideo ? photoCost * 0.1 + 75 : 0;
-
-  const companyProfit =
-    totalCost -
-    (photographerPay +
-      assistPay +
-      editorPay +
-      videographerPay +
-      videoEditorPay);
-
   return (
     <div>
       <Card maxW={{ base: "100%", sm: "1920px" }}>
