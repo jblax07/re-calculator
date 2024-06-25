@@ -13,7 +13,7 @@ const App: React.FC = () => {
           lg: '"nav nav" "main"', //1024px
         }}
       >
-        <GridItem area="nav" bgColor="#13A5C2">
+        <GridItem area="nav">
           <NavBar />
         </GridItem>
 

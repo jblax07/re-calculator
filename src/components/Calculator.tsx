@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
+  AbsoluteCenter,
+  Divider,
   Heading,
   Input,
   InputGroup,
@@ -7,6 +9,13 @@ import {
   Checkbox,
   VStack,
   HStack,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Box,
+  Stack,
+  StackDivider,
 } from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
 
@@ -122,53 +131,73 @@ const Calculator: React.FC = () => {
 
   return (
     <div>
-      <VStack padding="25px">
-        <Heading size="md">Estimated Listing Price: </Heading>
-        <InputGroup>
-          <InputLeftAddon pointerEvents="none" fontSize="1.2em">
-            $
-          </InputLeftAddon>
-          <Input
-            value={homeValue}
-            onChange={(e) => setHomeValue(Number(e.target.value))}
-            placeholder="300000"
-          />
-        </InputGroup>
-        <p></p>
-        <Heading size="md">Virtual Staging: </Heading>
-        <InputGroup>
-          <InputLeftAddon pointerEvents="none" fontSize="1.2em">
-            #
-          </InputLeftAddon>
-          <Input
-            type="number"
-            value={virtualStaging}
-            onChange={(e) => setVirtualStaging(Number(e.target.value))}
-          />
-        </InputGroup>
-        <Checkbox
-          checked={isMatterport}
-          onChange={(e) => setIsMatterport(e.target.checked)}
-        >
-          {" "}
-          Matterport + Floor Plan Schematic
-        </Checkbox>
-        <p></p>
-        <Checkbox
-          type="checkbox"
-          checked={isVideo}
-          onChange={(e) => setIsVideo(e.target.checked)}
-        >
-          Video
-        </Checkbox>
-        <p></p>
-        <HStack margin="0px">
-          <Heading size="lg">Total Cost: ${totalCost.toFixed(2)}</Heading>{" "}
-          <p></p>
-          <CopyButton textToCopy={totalCost.toFixed(2)} />
-        </HStack>
+      <VStack padding="0px">
+        <Card>
+          <CardHeader>
+            <Heading size="md">Estimated Listing Price: </Heading>
+            <InputGroup>
+              <InputLeftAddon pointerEvents="none" fontSize="1.2em">
+                $
+              </InputLeftAddon>
+              <Input
+                value={homeValue}
+                onChange={(e) => setHomeValue(Number(e.target.value))}
+                placeholder="300000"
+              />
+            </InputGroup>
+          </CardHeader>
 
-        {/* {closingPayment > 0 && (
+          <CardHeader>
+            <Heading size="md">Virtual Staging: </Heading>
+            <InputGroup>
+              <InputLeftAddon pointerEvents="none" fontSize="1.2em">
+                #
+              </InputLeftAddon>
+              <Input
+                type="number"
+                value={virtualStaging}
+                onChange={(e) => setVirtualStaging(Number(e.target.value))}
+              />
+            </InputGroup>
+          </CardHeader>
+
+          <Box position="relative" padding="5">
+            <Divider />
+            <AbsoluteCenter px="4">Optional</AbsoluteCenter>
+          </Box>
+
+          <CardBody>
+            <VStack>
+              <Checkbox
+                checked={isMatterport}
+                onChange={(e) => setIsMatterport(e.target.checked)}
+              >
+                Matterport + Floor Plan
+              </Checkbox>
+
+              <Checkbox
+                type="checkbox"
+                checked={isVideo}
+                onChange={(e) => setIsVideo(e.target.checked)}
+              >
+                Video Walkthrough
+              </Checkbox>
+            </VStack>
+          </CardBody>
+          <Box position="relative" padding="5">
+            <Divider />
+            <AbsoluteCenter px="4">Total Cost</AbsoluteCenter>
+          </Box>
+          <CardFooter>
+            <HStack marginLeft="25%">
+              <Heading size="lg">${totalCost.toFixed(2)}</Heading> <p></p>
+              <CopyButton textToCopy={totalCost.toFixed(2)} />
+            </HStack>
+          </CardFooter>
+        </Card>
+      </VStack>
+
+      {/* {closingPayment > 0 && (
         <>
           <h4>$650 Deposit</h4>
           <h4>${closingPayment.toFixed(2)} At Closing if Elected</h4>
@@ -176,14 +205,13 @@ const Calculator: React.FC = () => {
         </>
       )}
       {!closingPayment && <h4></h4>} */}
-        {/* <hr></hr> */}
-        {/* <span>
+      {/* <hr></hr> */}
+      {/* <span>
         We offer a delayed payment plan for those bigger shoots: Pay $650
         upfront and defer the remaining balance with a 15% convenience fee on
         the remaining balance at closing.
       </span> */}
-        {/* <hr></hr> */}
-      </VStack>
+      {/* <hr></hr> */}
     </div>
   );
 };
