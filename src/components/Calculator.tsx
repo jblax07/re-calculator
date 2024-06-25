@@ -14,9 +14,9 @@ import {
   CardBody,
   CardFooter,
   Box,
-  useToast,
   Stack,
   StackDivider,
+  Flex,
 } from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
 
@@ -132,71 +132,78 @@ const Calculator: React.FC = () => {
 
   return (
     <div>
-      <VStack padding="0px">
-        <Card>
-          <CardHeader>
-            <Heading size="md">Estimated Listing Price: </Heading>
-            <InputGroup>
-              <InputLeftAddon pointerEvents="none" fontSize="1.2em">
-                $
-              </InputLeftAddon>
-              <Input
-                value={homeValue}
-                onChange={(e) => setHomeValue(Number(e.target.value))}
-                placeholder="300000"
-              />
-            </InputGroup>
-          </CardHeader>
+      <Card maxW={{ base: "100%", sm: "1920px" }}>
+        <CardHeader>
+          <Heading size="md" p="15px">
+            Real Estate Value:{" "}
+          </Heading>
+          <Stack divider={<StackDivider />} spacing="5"></Stack>
+          <InputGroup>
+            <InputLeftAddon pointerEvents="none" fontSize="1.2em">
+              $
+            </InputLeftAddon>
+            <Input
+              value={homeValue}
+              onChange={(e) => setHomeValue(Number(e.target.value))}
+              placeholder="300000"
+            />
+          </InputGroup>
 
-          <CardHeader>
-            <Heading size="md">Virtual Staging: </Heading>
-            <InputGroup>
-              <InputLeftAddon pointerEvents="none" fontSize="1.2em">
-                #
-              </InputLeftAddon>
-              <Input
-                type="number"
-                value={virtualStaging}
-                onChange={(e) => setVirtualStaging(Number(e.target.value))}
-              />
-            </InputGroup>
-          </CardHeader>
+          <Heading size="md" p="15px">
+            Virtual Staging:{" "}
+          </Heading>
+          <InputGroup>
+            <InputLeftAddon pointerEvents="none" fontSize="1.2em">
+              #
+            </InputLeftAddon>
+            <Input
+              type="number"
+              value={virtualStaging}
+              onChange={(e) => setVirtualStaging(Number(e.target.value))}
+            />
+          </InputGroup>
+        </CardHeader>
 
-          <Box position="relative" padding="5">
-            <Divider />
-            <AbsoluteCenter px="4">Optional</AbsoluteCenter>
-          </Box>
+        <Box position="relative" padding="5">
+          <Divider />
+          <AbsoluteCenter px="4">Optional</AbsoluteCenter>
+        </Box>
 
-          <CardBody>
-            <VStack>
-              <Checkbox
-                checked={isMatterport}
-                onChange={(e) => setIsMatterport(e.target.checked)}
-              >
-                Matterport + Floor Plan
-              </Checkbox>
+        <CardBody>
+          <VStack>
+            <Checkbox
+              checked={isMatterport}
+              onChange={(e) => setIsMatterport(e.target.checked)}
+            >
+              Matterport + Floor Plan
+            </Checkbox>
 
-              <Checkbox
-                type="checkbox"
-                checked={isVideo}
-                onChange={(e) => setIsVideo(e.target.checked)}
-              >
-                Video Walkthrough
-              </Checkbox>
-            </VStack>
-          </CardBody>
-          <Box position="relative" padding="5">
-            <Divider />
-            <AbsoluteCenter px="4">Total Cost</AbsoluteCenter>
-          </Box>
-          <CardFooter>
-            <HStack marginLeft="25%">
-              <Heading size="lg">${totalCost.toFixed(2)}</Heading> <p></p>
-              <CopyButton textToCopy={totalCost.toFixed(2)} />
-            </HStack>
-          </CardFooter>
-        </Card>
-      </VStack>
+            <Checkbox
+              type="checkbox"
+              checked={isVideo}
+              onChange={(e) => setIsVideo(e.target.checked)}
+            >
+              Video Walkthrough
+            </Checkbox>
+          </VStack>
+        </CardBody>
+        <Box position="relative" padding="5">
+          <Divider />
+          <AbsoluteCenter px="4">Total Cost</AbsoluteCenter>
+        </Box>
+        <CardBody>
+          <Flex
+            justifyContent="center"
+            flex="1"
+            gap="4"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            <Heading size="lg">${totalCost.toFixed(2)}</Heading> <p></p>
+            <CopyButton textToCopy={totalCost.toFixed(2)} />
+          </Flex>
+        </CardBody>
+      </Card>
 
       {/* {closingPayment > 0 && (
         <>

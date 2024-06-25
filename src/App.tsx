@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Calculator from "./components/Calculator";
 import Admin from "./components/Admin"; // Adjust the import path as necessary
 import { Grid, GridItem, Heading, Show } from "@chakra-ui/react";
-import "./index.css";
 import NavBar from "./components/NavBar";
 
 const App: React.FC = () => {
@@ -32,7 +31,7 @@ const App: React.FC = () => {
           <NavBar setCurrentComponent={setCurrentComponent} />
         </GridItem>
 
-        <GridItem area="main" padding="20px">
+        <GridItem area="main" padding="10px">
           {renderComponent()}
         </GridItem>
       </Grid>
