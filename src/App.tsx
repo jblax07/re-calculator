@@ -11,8 +11,6 @@ const App: React.FC = () => {
         alignContent: "center",
         alignItems: "center",
         padding: "50px",
-        backgroundColor: "#333",
-        color: "#fff",
         minHeight: "100vh",
       }}
     >
