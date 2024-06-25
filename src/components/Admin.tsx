@@ -61,21 +61,40 @@ const Admin: React.FC = () => {
     setTotalJobPrice(total);
   };
 
+  const roundDownToNearest5 = (value: number): number => {
+    return Math.floor(value / 5) * 5;
+  };
+
   const photographerBasePay = hasVideographer
     ? (totalJobPrice * 0.7) / 2
     : totalJobPrice * 0.7;
   const assistPay = hasAssistant ? photographerBasePay * 0.2 : 0;
-  const photographerPay = photographerBasePay - assistPay;
-  const editorPay = totalJobPrice * 0.06;
-  const videographerPay = hasVideographer ? photographerBasePay : 0;
-  const videoEditorPay = hasVideographer ? videographerPay * 0.1 + 75 : 0;
+  const roundedAssistPay = roundDownToNearest5(assistPay);
+  const photographerPay = photographerBasePay - roundedAssistPay;
+  const roundedPhotographerPay = roundDownToNearest5(photographerPay);
+  const editorPay = Math.max(totalJobPrice * 0.06, 15);
+  const roundedEditorPay = roundDownToNearest5(editorPay);
+  const videographerPay = hasVideographer ? photographerBasePay - 25 : 0;
+  const roundedVideographerPay = roundDownToNearest5(videographerPay);
+  const videoEditorPay = hasVideographer
+    ? Math.max(
+        (totalJobPrice -
+          (roundedPhotographerPay +
+            roundedAssistPay +
+            roundedEditorPay +
+            roundedVideographerPay)) *
+          0.5 +
+          5
+      )
+    : 0;
+  const roundedVideoEditorPay = roundDownToNearest5(videoEditorPay);
   const companyProfit =
     totalJobPrice -
-    (photographerPay +
-      assistPay +
-      editorPay +
-      videographerPay +
-      videoEditorPay);
+    (roundedPhotographerPay +
+      roundedAssistPay +
+      roundedEditorPay +
+      roundedVideographerPay +
+      roundedVideoEditorPay);
 
   return (
     <div>
@@ -118,20 +137,20 @@ const Admin: React.FC = () => {
           </Box>
 
           <CardBody>
-            <VStack spacing={4}>
-              <Checkbox
-                isChecked={hasAssistant}
-                onChange={(e) => setHasAssistant(e.target.checked)}
-              >
-                Assistant
-              </Checkbox>
+            <HStack justify="center" spacing={4}>
               <Checkbox
                 isChecked={hasVideographer}
                 onChange={(e) => setHasVideographer(e.target.checked)}
               >
                 Videographer
               </Checkbox>
-            </VStack>
+              <Checkbox
+                isChecked={hasAssistant}
+                onChange={(e) => setHasAssistant(e.target.checked)}
+              >
+                Assistant
+              </Checkbox>
+            </HStack>
           </CardBody>
 
           <Box p="15px">
@@ -142,28 +161,34 @@ const Admin: React.FC = () => {
             <VStack spacing={4} align="start">
               <HStack justify="space-between" width="100%">
                 <Heading size="sm">Photographer Pay:</Heading>
-                <Heading size="sm">${photographerPay.toFixed(2)}</Heading>
+                <Heading size="sm">
+                  ${roundedPhotographerPay.toFixed(2)}
+                </Heading>
               </HStack>
               <HStack justify="space-between" width="100%">
                 <Heading size="sm">Photo Editor Pay:</Heading>
-                <Heading size="sm">${editorPay.toFixed(2)}</Heading>
+                <Heading size="sm">${roundedEditorPay.toFixed(2)}</Heading>
               </HStack>
               {hasVideographer && (
                 <>
                   <HStack justify="space-between" width="100%">
                     <Heading size="sm">Videographer Pay:</Heading>
-                    <Heading size="sm">${videographerPay.toFixed(2)}</Heading>
+                    <Heading size="sm">
+                      ${roundedVideographerPay.toFixed(2)}
+                    </Heading>
                   </HStack>
                   <HStack justify="space-between" width="100%">
                     <Heading size="sm">Video Editor Pay:</Heading>
-                    <Heading size="sm">${videoEditorPay.toFixed(2)}</Heading>
+                    <Heading size="sm">
+                      ${roundedVideoEditorPay.toFixed(2)}
+                    </Heading>
                   </HStack>
                 </>
               )}
               {hasAssistant && (
                 <HStack justify="space-between" width="100%">
                   <Heading size="sm">Assistant Pay:</Heading>
-                  <Heading size="sm">${assistPay.toFixed(2)}</Heading>
+                  <Heading size="sm">${roundedAssistPay.toFixed(2)}</Heading>
                 </HStack>
               )}
               <HStack justify="space-between" width="100%">
