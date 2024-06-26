@@ -116,12 +116,7 @@ const Calculator: React.FC = () => {
 
   return (
     <div>
-      <Card
-        maxW={{ base: "100%", sm: "1920px" }}
-        opacity=".90"
-        height="calc(90vh - 5vh)"
-        marginBottom="20px"
-      >
+      <Card>
         <CardHeader>
           <Heading size="md" p="15px">
             Real Estate Value:{" "}

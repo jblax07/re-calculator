@@ -14,6 +14,7 @@ import {
   Checkbox,
   AbsoluteCenter,
   HStack,
+  Flex,
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect } from "react";
 import PasteButton from "./PasteButton";
@@ -115,12 +116,7 @@ const Admin: React.FC = () => {
           </InputGroup>
         </VStack>
       ) : (
-        <Card
-          maxW={{ base: "100%", sm: "1920px" }}
-          opacity=".90"
-          height="calc(90vh - 5vh)"
-          marginBottom="20px"
-        >
+        <Card maxW="300px">
           <CardHeader>
             <Heading size="md" p="15px">
               Total Job Price:{" "}
@@ -145,12 +141,14 @@ const Admin: React.FC = () => {
           <CardBody>
             <HStack justify="center" spacing={4}>
               <Checkbox
+                size="sm"
                 isChecked={hasVideographer}
                 onChange={(e) => setHasVideographer(e.target.checked)}
               >
                 Videographer
               </Checkbox>
               <Checkbox
+                size="sm"
                 isChecked={hasAssistant}
                 onChange={(e) => setHasAssistant(e.target.checked)}
               >
