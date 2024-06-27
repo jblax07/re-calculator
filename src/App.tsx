@@ -3,8 +3,9 @@ import Calculator from "./components/Calculator";
 import Admin from "./components/Admin";
 import NavBar from "./components/NavBar";
 import { Grid, GridItem, Text, AspectRatio, Box } from "@chakra-ui/react";
-import "./App.css"; // Ensure to create and import the App.css file
+import "./index.css"; // Ensure to create and import the App.css file
 import Login from "./components/Login";
+import UserDash from "./components/UserDash";
 
 const App: React.FC = () => {
   const [currentComponent, setCurrentComponent] =
@@ -12,14 +13,16 @@ const App: React.FC = () => {
 
   const renderComponent = () => {
     switch (currentComponent) {
-      case "Login":
-        return <Login />;
+      case "UserDash":
+        return <UserDash />;
       case "Calculator":
         return <Calculator />;
       case "Admin":
         return <Admin />;
       default:
         return null;
+      case "Login":
+        return <Login />;
     }
   };
 
@@ -39,8 +42,8 @@ const App: React.FC = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        maxW="300px"
-        padding="10px"
+        maxW="100hw"
+        padding="15px"
         margin="0 auto"
       >
         {renderComponent()}

@@ -163,7 +163,6 @@ const Calculator: React.FC = () => {
             </Checkbox>
 
             <Checkbox
-              type="checkbox"
               checked={isVideo}
               onChange={(e) => setIsVideo(e.target.checked)}
             >

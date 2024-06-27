@@ -25,14 +25,17 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ setCurrentComponent }) => {
       />
       <MenuList>
         <MenuGroup>
-          <MenuItem onClick={() => setCurrentComponent("Login")}>
-            Login
+          <MenuItem onClick={() => setCurrentComponent("UserDash")}>
+            Dashboard
           </MenuItem>
           <MenuItem onClick={() => setCurrentComponent("Admin")}>
             Admin
           </MenuItem>
           <MenuItem onClick={() => setCurrentComponent("Calculator")}>
-            Estimator
+            Job Estimator
+          </MenuItem>
+          <MenuItem onClick={() => setCurrentComponent("Login")}>
+            Login
           </MenuItem>
         </MenuGroup>
         <MenuDivider />

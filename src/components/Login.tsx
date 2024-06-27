@@ -1,52 +1,34 @@
-import {
-  Card,
-  CardHeader,
-  Heading,
-  Input,
-  VStack,
-  InputGroup,
-  InputLeftAddon,
-  Box,
-  Button,
-  useToast,
-  CardBody,
-  Divider,
-  Checkbox,
-  AbsoluteCenter,
-  HStack,
-  CardFooter,
-  Flex,
-  Text,
-} from "@chakra-ui/react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-const Login = () => {
+const Login: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const authContext = useContext(AuthContext);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (authContext) {
+      await authContext.login({ email, password });
+    }
+  };
+
   return (
-    <Card>
-      <CardBody>
-        <Text fontSize="md" p="10px">
-          Username:
-        </Text>
-        <Input></Input>
-        <Text fontSize="md" p="10px">
-          Password:
-        </Text>
-        <Input></Input>
-        <Divider p="10px" />
-      </CardBody>
-      <CardBody p="0px">
-        <HStack justifyContent="center">
-          <Button fontSize="sm" size="xs">
-            Login
-          </Button>
-          <Button fontSize="sm" size="xs">
-            Create Account
-          </Button>
-        </HStack>
-      </CardBody>
-      <CardFooter justifyContent="center">
-        <Text fontSize="xs">Forgot Username | Password</Text>
-      </CardFooter>
-    </Card>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
