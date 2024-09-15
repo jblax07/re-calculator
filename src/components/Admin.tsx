@@ -19,6 +19,7 @@ import {
 import React, { useRef, useState, useEffect } from "react";
 import PasteButton from "./PasteButton";
 import DateCopy from "./dateCopy";
+import Calculator from "./Calculator";
 
 const Admin: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,6 +28,7 @@ const Admin: React.FC = () => {
   const [totalJobPrice, setTotalJobPrice] = useState<number>(0);
   const [hasAssistant, setHasAssistant] = useState<boolean>(false);
   const [hasVideographer, setHasVideographer] = useState<boolean>(false);
+  const [mileage, setMileage] = useState<number>(0);
   const toast = useToast();
 
   useEffect(() => {
@@ -63,21 +65,31 @@ const Admin: React.FC = () => {
     setTotalJobPrice(total);
   };
 
+  const updateMileage = (value: string) => {
+    const miles = parseFloat(value || "0");
+    setMileage(miles);
+  };
+
   const roundDownToNearest5 = (value: number): number => {
     return Math.floor(value / 5) * 5;
   };
 
+  const mileageCost = mileage * 1;
+  const totalJobWithMileage = totalJobPrice + mileageCost;
+
   const photographerBasePay = hasVideographer
-    ? (totalJobPrice * 0.7) / 2
-    : totalJobPrice * 0.7;
+    ? (totalJobWithMileage * 0.7) / 2
+    : totalJobWithMileage * 0.7;
   const assistPay = hasAssistant ? photographerBasePay * 0.2 : 0;
   const roundedAssistPay = roundDownToNearest5(assistPay);
   const photographerPay = photographerBasePay - roundedAssistPay;
   const roundedPhotographerPay = roundDownToNearest5(photographerPay);
-  const editorPay = Math.max(totalJobPrice * 0.06, 15);
-  const roundedEditorPay = roundDownToNearest5(editorPay);
-  const videographerPay = hasVideographer ? photographerBasePay - 25 : 0;
+  const videographerPay = hasVideographer ? photographerBasePay : 0;
   const roundedVideographerPay = roundDownToNearest5(videographerPay);
+  const editorPay = hasVideographer
+    ? Math.max((totalJobPrice - roundedVideographerPay) * 0.06, 15)
+    : Math.max(totalJobPrice * 0.06, 15);
+  const roundedEditorPay = roundDownToNearest5(editorPay);
   const videoEditorPay = hasVideographer
     ? Math.max(
         (totalJobPrice -
@@ -86,17 +98,18 @@ const Admin: React.FC = () => {
             roundedEditorPay +
             roundedVideographerPay)) *
           0.5 +
-          5
+          5,
+        15
       )
     : 0;
   const roundedVideoEditorPay = roundDownToNearest5(videoEditorPay);
-  const companyProfit =
-    totalJobPrice -
-    (roundedPhotographerPay +
-      roundedAssistPay +
-      roundedEditorPay +
-      roundedVideographerPay +
-      roundedVideoEditorPay);
+  const totalRoundedPayout =
+    roundedPhotographerPay +
+    roundedAssistPay +
+    roundedEditorPay +
+    roundedVideographerPay +
+    roundedVideoEditorPay;
+  const companyProfit = totalJobWithMileage - totalRoundedPayout;
 
   return (
     <div>
@@ -116,20 +129,36 @@ const Admin: React.FC = () => {
           </InputGroup>
         </VStack>
       ) : (
-        <Card maxW="300px">
+        <Card maxW="100%">
           <CardHeader>
-            <Heading size="md" p="15px">
-              Total Job Price:{" "}
-            </Heading>
+            <Calculator />
             <InputGroup>
-              <InputLeftAddon pointerEvents="none" fontSize="1.2em">
-                $
+              <InputLeftAddon
+                pointerEvents="none"
+                fontSize="1.2em"
+                paddingRight="30px"
+              >
+                Price
               </InputLeftAddon>
               <Input
                 ref={inputRef}
+                value={totalJobPrice} // Bind input value to state
                 onChange={(e) => updateTotalJobPrice(e.target.value)}
               />
               <PasteButton inputRef={inputRef} onPaste={updateTotalJobPrice} />
+            </InputGroup>
+            <InputGroup paddingTop="20px">
+              <InputLeftAddon
+                pointerEvents="none"
+                fontSize="1.2em"
+                paddingRight="7px"
+              >
+                Mileage
+              </InputLeftAddon>
+              <Input
+                value={mileage} // Bind input value to state
+                onChange={(e) => updateMileage(e.target.value)}
+              />
             </InputGroup>
           </CardHeader>
 
@@ -168,6 +197,10 @@ const Admin: React.FC = () => {
                 <Heading size="sm">
                   ${roundedPhotographerPay.toFixed(2)}
                 </Heading>
+              </HStack>
+              <HStack justify="space-between" width="100%">
+                <Heading size="sm">Mileage Pay:</Heading>
+                <Heading size="sm">${mileageCost.toFixed(2)}</Heading>
               </HStack>
               <HStack justify="space-between" width="100%">
                 <Heading size="sm">Photo Editor Pay:</Heading>

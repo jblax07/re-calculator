@@ -25,9 +25,7 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ setCurrentComponent }) => {
       />
       <MenuList>
         <MenuGroup>
-          <MenuItem onClick={() => setCurrentComponent("UserDash")}>
-            Dashboard
-          </MenuItem>
+          <MenuItem onClick={() => setCurrentComponent("Form")}>Form</MenuItem>
           <MenuItem onClick={() => setCurrentComponent("Admin")}>
             Admin
           </MenuItem>

@@ -1,5 +1,5 @@
 import { HStack, Image, Heading, VStack } from "@chakra-ui/react";
-import logo from "../assets/logo2.webp";
+import logo from "../assets/logo.webp";
 import MenuSelector from "./MenuSelector";
 
 interface NavBarProps {

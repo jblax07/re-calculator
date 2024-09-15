@@ -1,0 +1,585 @@
+My Cheat Sheet
+
+JavaScript Basics
+
+Explanation of Key Concepts
+Import Statements: Import necessary modules and hooks from React to use them in your components.
+
+Functional Component with Props:
+
+Props: Short for properties, these are arguments passed into React components.
+FC (FunctionComponent): A type provided by React for defining functional components.
+JSX: JavaScript XML, a syntax extension that allows writing HTML-like code inside JavaScript.
+
+
+What Does "Render" Mean in React?
+In React, "render" refers to the process of converting your React components into HTML that can be displayed on the web page. Rendering happens in two main contexts: initial render and re-render.
+
+Initial Render
+Initial Render: When a React component is rendered for the first time, React takes the component's output and inserts it into the DOM (Document Object Model), which is the structure that represents the web page.
+
+Re-render
+Re-render: When the state or props of a component change, React will re-run the component's render method to update the UI. This is known as re-rendering. React efficiently updates only the parts of the DOM that changed, rather than replacing the entire DOM tree.
+
+
+State:
+
+useState: A React hook that allows you to add state to functional components. The state is a way to preserve data between renders.
+Effect:
+useEffect: A React hook that allows you to perform side effects in your components, like fetching data or setting up a timer.
+
+Event Handling:
+
+Handling user interactions like clicks or input changes. Functions are defined to respond to these events.
+Context:
+Provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+
+Basic Syntax Explanation
+
+(): Parentheses are used to call functions or pass arguments to functions.
+{}: Curly braces are used to define objects, destructure objects, or embed JavaScript expressions in JSX.
+;: Semicolon is used to terminate statements in JavaScript/TypeScript.
+
+
+This cheat sheet provides a comprehensive guide to understanding TypeScript and React, covering every detail for a complete beginner. You can use this as a reference to aid in your learning process.
+
+Variables and Constants
+
+// var is used to declare a variable, which can be changed later.
+var myVariable = 10; // myVariable is a number with the value 10
+
+// let is used to declare a block-scoped variable, which can also be changed.
+let myLetVariable = 20; // myLetVariable is a number with the value 20
+
+// const is used to declare a block-scoped constant, which cannot be changed.
+const myConstVariable = 30; // myConstVariable is a number with the value 30
+
+Data Types
+
+// String: a sequence of characters
+const myString = "Hello, World!"; // myString is a string with the value "Hello, World!"
+
+// Number: a numeric value
+const myNumber = 123; // myNumber is a number with the value 123
+
+// Boolean: true or false
+const myBoolean = true; // myBoolean is a boolean with the value true
+
+// Array: a list of values
+const myArray = [1, 2, 3, 4, 5]; // myArray is an array of numbers
+
+// Object: a collection of key-value pairs
+const myObject = {
+  key1: "value1",
+  key2: "value2"
+}; // myObject is an object with keys key1 and key2
+
+
+Functions
+
+// A function is a block of code designed to perform a particular task.
+function add(a, b) {
+  return a + b; // The function returns the sum of a and b
+}
+
+// Calling a function
+const result = add(2, 3); // result is 5
+
+
+TypeScript Basics
+
+Type Annotations
+
+// Type annotations provide information about the type of a variable.
+let myString: string = "Hello, TypeScript!"; // myString must be a string
+let myNumber: number = 100; // myNumber must be a number
+let myBoolean: boolean = false; // myBoolean must be a boolean
+
+Interfaces
+
+// An interface defines the shape of an object.
+interface Person {
+  name: string;
+  age: number;
+}
+
+// Using the interface to type an object
+const person: Person = {
+  name: "John Doe",
+  age: 25
+};
+
+React Basics
+
+JSX
+
+// JSX stands for JavaScript XML. It allows us to write HTML inside JavaScript.
+const element = <h1>Hello, JSX!</h1>; // This is a JSX element
+
+
+Functional Components
+
+// A functional component is a JavaScript function that returns a React element.
+import React from 'react';
+
+// Props are arguments passed into React components
+interface MyComponentProps {
+  title: string; // title must be a string
+  isActive: boolean; // isActive must be a boolean
+}
+
+// FC stands for FunctionComponent, which is a type provided by React for defining functional components.
+const MyComponent: React.FC<MyComponentProps> = ({ title, isActive }) => {
+  return (
+    <div>
+      <h1>{title}</h1>  {/* Display the title prop */}
+      <p>{isActive ? "Active" : "Inactive"}</p>  {/* Conditional rendering based on isActive prop */}
+    </div>
+  );
+};
+
+State 
+
+// useState is a React hook that allows you to add state to a functional component.
+import React, { useState } from 'react';
+
+const Counter: React.FC = () => {
+  // count is the state variable, and setCount is the function to update it.
+  // The initial value of count is 0.
+  const [count, setCount] = useState<number>(0);
+
+  // A function to increment the count state
+  const increment = () => {
+    setCount(count + 1); // Update the count state
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>  {/* Display the current count */}
+      <button onClick={increment}>Increment</button>  {/* Button to increment the count */}
+    </div>
+  );
+};
+
+Effect
+
+
+// useEffect is a React hook that allows you to perform side effects in a functional component.
+import React, { useState, useEffect } from 'react';
+
+const Timer: React.FC = () => {
+  // useState to manage the time state variable.
+  const [time, setTime] = useState<number>(0);
+
+  // useEffect sets up a timer that increments the time state every second.
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime((prevTime) => prevTime + 1);  // Increment the time state
+    }, 1000);
+
+    // Cleanup function to clear the timer when the component unmounts.
+    return () => clearInterval(timer);
+  }, []);  // The empty dependency array means this effect runs once on mount.
+
+  return <p>Timer: {time}</p>;  // Display the current time.
+};
+
+Event Handling
+
+// Handling events in React is similar to handling events in plain JavaScript.
+import React, { useState } from 'react';
+
+const InputComponent: React.FC = () => {
+  // useState to manage the value of the input field.
+  const [value, setValue] = useState<string>("");
+
+  // A function to handle changes in the input field.
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);  // Update the value state with the input value.
+  };
+
+  return (
+    <div>
+      <input type="text" value={value} onChange={handleChange} />  {/* Input field with onChange handler */}
+      <p>Input: {value}</p>  {/* Display the current value of the input field */}
+    </div>
+  );
+};
+
+Context
+
+// Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+import React, { useState, createContext, useContext } from 'react';
+
+// An interface to define the shape of the context object.
+interface AppContextInterface {
+  user: string;  // user must be a string.
+  updateUser: (name: string) => void;  // updateUser must be a function that takes a string and returns void.
+}
+
+// Creating a context with a default value of null.
+const AppContext = createContext<AppContextInterface | null>(null);
+
+// A provider component that supplies the context to its children.
+const AppProvider: React.FC = ({ children }) => {
+  // useState to manage the user state.
+  const [user, setUser] = useState<string>("");
+
+  // A function to update the user state.
+  const updateUser = (name: string) => {
+    setUser(name);
+  };
+
+  return (
+    // The value prop of the provider supplies the context value to its children.
+    <AppContext.Provider value={{ user, updateUser }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+// Using Context in a Component
+// A functional component that consumes the context and uses its values.
+const UserProfile: React.FC = () => {
+  // useContext is a React hook that lets you subscribe to React context.
+  const context = useContext(AppContext);
+
+  // If the context is not available, return null.
+  if (!context) {
+    return null;
+  }
+
+  // Destructure user and updateUser from the context.
+  const { user, updateUser } = context;
+
+  return (
+    <div>
+      <p>User: {user}</p>  {/* Display the current user */}
+      <button onClick={() => updateUser("NewUserName")}>Update User</button>  {/* Button to update the user */}
+    </div>
+  );
+};
+
+// Example of using all components together.
+const App: React.FC = () => {
+  return (
+    <AppProvider>
+      <MyComponent title="Hello, World!" isActive={true} />
+      <Counter />
+      <Timer />
+      <InputComponent />
+      <UserProfile />
+    </AppProvider>
+  );
+};
+
+export default App;
+
+Advanced Cheat Sheet: React, TypeScript, and SQL Database Integration
+
+TypeScript Basics
+
+Basic Types
+
+// Boolean: true or false values
+let isDone: boolean = false;
+
+// Number: numeric values
+let decimal: number = 6;
+
+// String: text values
+let color: string = "blue";
+
+// Array: list of values, all of the same type
+let list: number[] = [1, 2, 3];
+
+// Tuple: list of values, each can be of a different type
+let tuple: [string, number];
+tuple = ["hello", 10]; // Okay
+
+
+Interfaces
+
+// Interface: defines the shape of an object
+interface Person {
+    name: string; // Name must be a string
+    age: number;  // Age must be a number
+  }
+  
+  // Creating an object that fits the Person interface
+  let user: Person = {
+    name: "John",
+    age: 25
+  };
+
+  Classes
+
+  // Class: blueprint for creating objects with methods and properties
+class Animal {
+    name: string; // Property 'name' of type string
+  
+    // Constructor: function that runs when you create a new Animal
+    constructor(name: string) {
+      this.name = name; // Set the name property
+    }
+  
+    // Method: function inside a class
+    move(distanceInMeters: number = 0) {
+      console.log(`${this.name} moved ${distanceInMeters}m.`);
+    }
+  }
+  
+  // Create a new Animal instance
+  let dog = new Animal("Dog");
+  dog.move(10); // Logs: Dog moved 10m.
+  
+  
+
+  Enums
+
+// Enum: a way to define a set of named constants
+enum Color {
+    Red,    // 0
+    Green,  // 1
+    Blue    // 2
+  }
+  let c: Color = Color.Green; // c is 1 (the value for Green)
+
+Functional Components
+
+// Import React library
+import React from 'react';
+
+// Props: arguments passed into React components
+interface Props {
+  title: string; // title must be a string
+}
+
+// FC: FunctionComponent, a type for functional components
+const MyComponent: React.FC<Props> = ({ title }) => {
+  // Return: what the component renders
+  return <h1>{title}</h1>;
+};
+
+export default MyComponent;
+
+
+
+State Hook
+
+import React, { useState } from 'react';
+
+const Counter: React.FC = () => {
+  // useState: a hook to add state to a functional component
+  // count: the current state value
+  // setCount: function to update the state value
+  // 0: the initial state value
+  const [count, setCount] = useState<number>(0);
+
+  return (
+    <div>
+      <p>{count}</p>  {/* Display the current count */}
+      <button onClick={() => setCount(count + 1)}>Increment</button>  {/* Button to increment the count */}
+    </div>
+  );
+};
+
+export default Counter;
+
+
+Effect Hook
+
+import React, { useState, useEffect } from 'react';
+
+const Timer: React.FC = () => {
+  // useState to manage the time state variable
+  const [time, setTime] = useState<number>(0);
+
+  // useEffect: a hook to perform side effects in a functional component
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(prevTime => prevTime + 1);  // Increment the time state
+    }, 1000);  // Run every 1 second
+
+    // Cleanup function to clear the timer when the component unmounts
+    return () => clearInterval(timer);
+  }, []);  // Empty dependency array means this effect runs once on mount
+
+  return <p>{time}</p>;  {/* Display the current time */}
+};
+
+export default Timer;
+
+Event Handling
+
+import React, { useState } from 'react';
+
+const InputComponent: React.FC = () => {
+  // useState to manage the value of the input field
+  const [value, setValue] = useState<string>("");
+
+  // Event handler function for input change
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);  // Update the value state with the input value
+  };
+
+  return (
+    <div>
+      <input type="text" value={value} onChange={handleChange} />  {/* Input field with onChange handler */}
+      <p>Input: {value}</p>  {/* Display the current value of the input field */}
+    </div>
+  );
+};
+
+export default InputComponent;
+
+
+Context
+
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+// Entity: a class that maps to a database table
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;  // Primary key column, auto-generated
+
+  @Column()
+  name: string;  // Regular column, must be a string
+
+  @Column()
+  age: number;  // Regular column, must be a number
+}
+
+
+Integrating with SQL Database using TypeORM
+Entities
+
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+// Entity: a class that maps to a database table
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;  // Primary key column, auto-generated
+
+  @Column()
+  name: string;  // Regular column, must be a string
+
+  @Column()
+  age: number;  // Regular column, must be a number
+}
+
+
+Creating a Connection
+
+import { createConnection } from 'typeorm';
+import { User } from './entity/User';
+
+// Create a connection to the PostgreSQL database
+createConnection({
+  type: 'postgres',  // Database type
+  host: 'localhost',  // Database host
+  port: 5432,  // Database port
+  username: 'test',  // Database username
+  password: 'test',  // Database password
+  database: 'test',  // Database name
+  entities: [User],  // Entities to be used
+  synchronize: true,  // Synchronize the database schema
+}).then(connection => {
+  console.log('Connected to the database');
+}).catch(error => console.log('Error: ', error));
+
+
+Using Repository for CRUD Operations
+
+import { getRepository } from 'typeorm';
+import { User } from './entity/User';
+
+const userRepository = getRepository(User);
+
+// Create a new user
+const user = new User();
+user.name = 'John Doe';
+user.age = 30;
+await userRepository.save(user);
+
+// Read users
+const users = await userRepository.find();
+console.log(users);
+
+// Update a user
+user.age = 31;
+await userRepository.save(user);
+
+// Delete a user
+await userRepository.remove(user);
+
+
+Express Routes for CRUD Operations
+
+import express from 'express';
+import { getRepository } from 'typeorm';
+import { User } from './entity/User';
+
+const app = express();
+app.use(express.json()); // Middleware to parse JSON
+
+// Route to get all users
+app.get('/users', async (req, res) => {
+  const users = await getRepository(User).find();
+  res.json(users);
+});
+
+// Route to create a new user
+app.post('/users', async (req, res) => {
+  const user = getRepository(User).create(req.body);
+  const result = await getRepository(User).save(user);
+  res.send(result);
+});
+
+// Route to update a user
+app.put('/users/:id', async (req, res) => {
+  const user = await getRepository(User).findOne(req.params.id);
+  getRepository(User).merge(user, req.body);
+  const result = await getRepository(User).save(user);
+  res.send(result);
+});
+
+// Route to delete a user
+app.delete('/users/:id', async (req, res) => {
+  const result = await getRepository(User).delete(req.params.id);
+  res.send(result);
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+Summary
+This cheat sheet covers the following:
+
+TypeScript Basics: Basic types, interfaces, classes, and enums.
+React Basics with TypeScript: Functional components, state and effect hooks, and context.
+Integrating with SQL Database using TypeORM: Defining entities, creating connections, using repositories, and setting up CRUD operations with Express.
+Key Concepts and Explanations
+TypeScript:
+
+Basic Types: Define the types of variables.
+Interfaces: Describe the shape of objects.
+Classes: Define blueprints for creating objects.
+Enums: Define a set of named constants.
+React:
+
+Functional Components: Components defined as functions.
+Props: Data passed to components.
+State: Data that changes over time.
+Effect: Side effects like data fetching or subscriptions.
+Context: Way to pass data through the component tree without prop drilling.
+TypeORM:
+
+Entities: Classes that map to database tables.
+Repository: Provides an interface to perform CRUD operations.
+Connection: Configuration and connection to the database.
+This should give you a comprehensive understanding of how to integrate a SQL database with a React and TypeScript application.
