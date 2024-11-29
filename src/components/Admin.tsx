@@ -61,8 +61,14 @@ const Admin: React.FC = () => {
   };
 
   const updateTotalJobPrice = (value: string) => {
-    const total = parseFloat(value || "0");
-    setTotalJobPrice(total);
+    // Remove any non-numeric characters except decimal point
+    const numericValue = value.replace(/[^\d.]/g, '');
+    // Ensure only valid numbers are set
+    if (numericValue === '') {
+      setTotalJobPrice(0);
+    } else if (!isNaN(Number(numericValue))) {
+      setTotalJobPrice(Number(numericValue));
+    }
   };
 
   const updateMileage = (value: string) => {
@@ -111,132 +117,138 @@ const Admin: React.FC = () => {
     roundedVideoEditorPay;
   const companyProfit = totalJobWithMileage - totalRoundedPayout;
 
+  const handleCalculatorTotal = (total: number) => {
+    setTotalJobPrice(Number(total));
+  };
+
+  if (!isAuthenticated && !password) {
+    return (
+      <VStack spacing={4}>
+        <Heading size="md">Enter Password to View this Page</Heading>
+        <InputGroup>
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={handlePasswordSubmit} colorScheme="blue">
+            Submit
+          </Button>
+        </InputGroup>
+      </VStack>
+    );
+  }
+
   return (
     <div>
-      {!isAuthenticated ? (
-        <VStack spacing={4}>
-          <Heading size="md">Enter Password to View this Page</Heading>
+      <Card maxW="100%">
+        <CardHeader>
+          <Calculator onTotalChange={handleCalculatorTotal} />
           <InputGroup>
+            <InputLeftAddon
+              pointerEvents="none"
+              fontSize="1.2em"
+              paddingRight="30px"
+            >
+              Price
+            </InputLeftAddon>
             <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              ref={inputRef}
+              value={totalJobPrice}
+              onChange={(e) => updateTotalJobPrice(e.target.value)}
             />
-            <Button onClick={handlePasswordSubmit} colorScheme="blue">
-              Submit
-            </Button>
+            <PasteButton inputRef={inputRef} onPaste={updateTotalJobPrice} />
           </InputGroup>
-        </VStack>
-      ) : (
-        <Card maxW="100%">
-          <CardHeader>
-            <Calculator />
-            <InputGroup>
-              <InputLeftAddon
-                pointerEvents="none"
-                fontSize="1.2em"
-                paddingRight="30px"
-              >
-                Price
-              </InputLeftAddon>
-              <Input
-                ref={inputRef}
-                value={totalJobPrice} // Bind input value to state
-                onChange={(e) => updateTotalJobPrice(e.target.value)}
-              />
-              <PasteButton inputRef={inputRef} onPaste={updateTotalJobPrice} />
-            </InputGroup>
-            <InputGroup paddingTop="20px">
-              <InputLeftAddon
-                pointerEvents="none"
-                fontSize="1.2em"
-                paddingRight="7px"
-              >
-                Mileage
-              </InputLeftAddon>
-              <Input
-                value={mileage} // Bind input value to state
-                onChange={(e) => updateMileage(e.target.value)}
-              />
-            </InputGroup>
-          </CardHeader>
+          <InputGroup paddingTop="20px">
+            <InputLeftAddon
+              pointerEvents="none"
+              fontSize="1.2em"
+              paddingRight="7px"
+            >
+              Mileage
+            </InputLeftAddon>
+            <Input
+              value={mileage}
+              onChange={(e) => updateMileage(e.target.value)}
+            />
+          </InputGroup>
+        </CardHeader>
 
-          <Box position="relative" padding="5">
-            <Divider />
-            <AbsoluteCenter px="4">Optional</AbsoluteCenter>
-          </Box>
+        <Box position="relative" padding="5">
+          <Divider />
+          <AbsoluteCenter px="4">Optional</AbsoluteCenter>
+        </Box>
 
-          <CardBody>
-            <HStack justify="center" spacing={4}>
-              <Checkbox
-                size="sm"
-                isChecked={hasVideographer}
-                onChange={(e) => setHasVideographer(e.target.checked)}
-              >
-                Videographer
-              </Checkbox>
-              <Checkbox
-                size="sm"
-                isChecked={hasAssistant}
-                onChange={(e) => setHasAssistant(e.target.checked)}
-              >
-                Assistant
-              </Checkbox>
+        <CardBody>
+          <HStack justify="center" spacing={4}>
+            <Checkbox
+              size="sm"
+              isChecked={hasVideographer}
+              onChange={(e) => setHasVideographer(e.target.checked)}
+            >
+              Videographer
+            </Checkbox>
+            <Checkbox
+              size="sm"
+              isChecked={hasAssistant}
+              onChange={(e) => setHasAssistant(e.target.checked)}
+            >
+              Assistant
+            </Checkbox>
+          </HStack>
+        </CardBody>
+
+        <Box p="15px">
+          <Divider />
+        </Box>
+
+        <CardBody>
+          <VStack spacing={4} align="start">
+            <HStack justify="space-between" width="100%">
+              <Heading size="sm">Photographer Pay:</Heading>
+              <Heading size="sm">
+                ${roundedPhotographerPay.toFixed(2)}
+              </Heading>
             </HStack>
-          </CardBody>
-
-          <Box p="15px">
-            <Divider />
-          </Box>
-
-          <CardBody>
-            <VStack spacing={4} align="start">
-              <HStack justify="space-between" width="100%">
-                <Heading size="sm">Photographer Pay:</Heading>
-                <Heading size="sm">
-                  ${roundedPhotographerPay.toFixed(2)}
-                </Heading>
-              </HStack>
-              <HStack justify="space-between" width="100%">
-                <Heading size="sm">Mileage Pay:</Heading>
-                <Heading size="sm">${mileageCost.toFixed(2)}</Heading>
-              </HStack>
-              <HStack justify="space-between" width="100%">
-                <Heading size="sm">Photo Editor Pay:</Heading>
-                <Heading size="sm">${roundedEditorPay.toFixed(2)}</Heading>
-              </HStack>
-              {hasVideographer && (
-                <>
-                  <HStack justify="space-between" width="100%">
-                    <Heading size="sm">Videographer Pay:</Heading>
-                    <Heading size="sm">
-                      ${roundedVideographerPay.toFixed(2)}
-                    </Heading>
-                  </HStack>
-                  <HStack justify="space-between" width="100%">
-                    <Heading size="sm">Video Editor Pay:</Heading>
-                    <Heading size="sm">
-                      ${roundedVideoEditorPay.toFixed(2)}
-                    </Heading>
-                  </HStack>
-                </>
-              )}
-              {hasAssistant && (
+            <HStack justify="space-between" width="100%">
+              <Heading size="sm">Mileage Pay:</Heading>
+              <Heading size="sm">${mileageCost.toFixed(2)}</Heading>
+            </HStack>
+            <HStack justify="space-between" width="100%">
+              <Heading size="sm">Photo Editor Pay:</Heading>
+              <Heading size="sm">${roundedEditorPay.toFixed(2)}</Heading>
+            </HStack>
+            {hasVideographer && (
+              <>
                 <HStack justify="space-between" width="100%">
-                  <Heading size="sm">Assistant Pay:</Heading>
-                  <Heading size="sm">${roundedAssistPay.toFixed(2)}</Heading>
+                  <Heading size="sm">Videographer Pay:</Heading>
+                  <Heading size="sm">
+                    ${roundedVideographerPay.toFixed(2)}
+                  </Heading>
                 </HStack>
-              )}
+                <HStack justify="space-between" width="100%">
+                  <Heading size="sm">Video Editor Pay:</Heading>
+                  <Heading size="sm">
+                    ${roundedVideoEditorPay.toFixed(2)}
+                  </Heading>
+                </HStack>
+              </>
+            )}
+            {hasAssistant && (
               <HStack justify="space-between" width="100%">
-                <Heading size="md">Company Profit:</Heading>
-                <Heading size="md">${companyProfit.toFixed(2)}</Heading>
+                <Heading size="sm">Assistant Pay:</Heading>
+                <Heading size="sm">${roundedAssistPay.toFixed(2)}</Heading>
               </HStack>
-            </VStack>
-          </CardBody>
-          <DateCopy />
-        </Card>
-      )}
+            )}
+            <HStack justify="space-between" width="100%">
+              <Heading size="md">Company Profit:</Heading>
+              <Heading size="md">${companyProfit.toFixed(2)}</Heading>
+            </HStack>
+          </VStack>
+        </CardBody>
+        <DateCopy />
+      </Card>
     </div>
   );
 };

@@ -21,7 +21,11 @@ import {
 } from "@chakra-ui/react";
 import CopyButton from "./CopyButton";
 
-const Calculator: React.FC = () => {
+interface CalculatorProps {
+  onTotalChange: (total: number) => void;
+}
+
+const Calculator: React.FC<CalculatorProps> = ({ onTotalChange }) => {
   const [homeValue, setHomeValue] = useState<number>(0);
   const [additionalPhotos, setAdditionalPhotos] = useState<number>(0);
   const [aerialPhotos, setAerialPhotos] = useState<number>(0);
@@ -97,6 +101,10 @@ const Calculator: React.FC = () => {
     virtualStaging,
     includeAssistant,
   ]);
+
+  useEffect(() => {
+    onTotalChange(totalCost);
+  }, [totalCost, onTotalChange]);
 
   const incrementHomeValue = () => {
     setHomeValue((prev) => prev + 50000);

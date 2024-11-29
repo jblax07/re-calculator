@@ -8,21 +8,25 @@ import UserDash from "./components/UserDash";
 import Form from "./components/Form";
 
 const App: React.FC = () => {
-  const [currentComponent, setCurrentComponent] =
-    useState<string>("Calculator");
+  const [currentComponent, setCurrentComponent] = useState<string>("Calculator");
+  const [totalCost, setTotalCost] = useState<number>(0);
+
+  const handleTotalChange = (total: number) => {
+    setTotalCost(total);
+  };
 
   const renderComponent = () => {
     switch (currentComponent) {
       case "Calculator":
-        return <Calculator />;
+        return <Calculator onTotalChange={() => {}} />;
       case "Admin":
         return <Admin />;
-      default:
-        return null;
       case "Login":
         return <Login />;
       case "Form":
         return <Form />;
+      default:
+        return null;
     }
   };
 
